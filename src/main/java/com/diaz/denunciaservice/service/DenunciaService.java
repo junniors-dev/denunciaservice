@@ -4,9 +4,10 @@ import com.diaz.denunciaservice.entity.Denuncia;
 import com.diaz.denunciaservice.repository.DenunciaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -18,34 +19,29 @@ public class DenunciaService {
         this.repository = repository;
     }
 
-    @Transactional
     public Denuncia registrar(Denuncia denuncia) {
-        // el id lo genera la BD y el estado siempre arranca en 1
         denuncia.setId(null);
         denuncia.setEstado(1);
+        if (denuncia.getFecha() == null) {
+            // hora de Perú aunque el servidor de Render esté en UTC
+            denuncia.setFecha(LocalDateTime.now(ZoneId.of("America/Lima")));
+        }
         return repository.save(denuncia);
     }
 
-    @Transactional(readOnly = true)
     public List<Denuncia> listar(int offset, int limit) {
-        if (offset < 0 || limit < 1 || limit > 50) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "offset >= 0 y limit entre 1 y 50");
-        }
-        return repository.listarPaginado(offset, limit);
+        return repository.listar(offset, limit);
     }
 
-    @Transactional(readOnly = true)
     public Denuncia obtener(Integer id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe la denuncia " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @Transactional(readOnly = true)
     public List<Denuncia> listarPorDni(String dni) {
-        return repository.findByDniOrderByIdDesc(dni);
+        return repository.findByDni(dni);
     }
 
-    @Transactional
     public Denuncia atender(Integer id) {
         Denuncia denuncia = obtener(id);
         denuncia.setEstado(0);

@@ -1,14 +1,8 @@
 FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
-COPY .mvn .mvn
-COPY mvnw pom.xml ./
-RUN chmod +x mvnw && ./mvnw -B -q dependency:go-offline
-COPY src src
-RUN ./mvnw -B -q package -DskipTests
+COPY . .
+RUN chmod +x mvnw && ./mvnw -B -q package
 
 FROM eclipse-temurin:21-jre
-WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
-EXPOSE 8080
-# el plan gratuito de Render tiene 512 MB
-ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
