@@ -18,6 +18,5 @@ Con la MariaDB de XAMPP encendida: `mvnw.cmd spring-boot:run`
 
 ## Render
 
-1. New → PostgreSQL. Copiar la *Internal Database URL*: `postgresql://USUARIO:CLAVE@HOST/BASE`.
-2. New → Web Service desde este repo, runtime **Docker**.
-3. Variables de entorno: `DB_URL` = `jdbc:postgresql://HOST/BASE`, `DB_USER` = `USUARIO`, `DB_PASSWORD` = `CLAVE`.
+`render.yaml` crea la base PostgreSQL y el Web Service (Docker) y les pasa los datos de conexión
+como variables de entorno, sin credenciales en el repo. En Render: New → Blueprint → este repositorio.

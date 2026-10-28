@@ -1,0 +1,24 @@
+databases:
+  - name: denuncias-db
+    plan: free
+    databaseName: denuncias
+    user: denuncias
+
+services:
+  - type: web
+    name: denunciaservice-diaz
+    runtime: docker
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: DB_HOST
+        fromDatabase: { name: denuncias-db, property: host }
+      - key: DB_PORT
+        fromDatabase: { name: denuncias-db, property: port }
+      - key: DB_NAME
+        fromDatabase: { name: denuncias-db, property: database }
+      - key: DB_USER
+        fromDatabase: { name: denuncias-db, property: user }
+      - key: DB_PASSWORD
+        fromDatabase: { name: denuncias-db, property: password }
