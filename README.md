@@ -26,6 +26,8 @@ Cuerpo del POST (la fecha es opcional; si no llega, se usa la hora de Lima):
 }
 ```
 
+La colección `postman/denunciaservice.postman_collection.json` trae los 5 endpoints. Cambia la variable `baseUrl` para pasar de local a Render.
+
 ## Ejecución local
 
 Con la MariaDB de XAMPP encendida (crea sola la base `denuncias_db`):

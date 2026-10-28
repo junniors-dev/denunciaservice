@@ -1,0 +1,53 @@
+{
+  "info": {
+    "name": "denunciaservice",
+    "description": "Los 5 endpoints de la API de denuncias. Cambia la variable baseUrl entre local y Render.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "id", "value": "1" },
+    { "key": "dni", "value": "71234561" }
+  ],
+  "item": [
+    {
+      "name": "1. Registrar denuncia",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/denuncias/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"dni\": \"71234561\",\n  \"tipo\": \"ROBO\",\n  \"direccion\": \"Av. Balta 500, Chiclayo\",\n  \"descripcion\": \"Me arrebataron el celular en el paradero\"\n}"
+        }
+      }
+    },
+    {
+      "name": "2. Obtener denuncias paginadas",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/denuncias/?offset=0&limit=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["denuncias", ""],
+          "query": [
+            { "key": "offset", "value": "0" },
+            { "key": "limit", "value": "5" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "3. Obtener denuncia por id",
+      "request": { "method": "GET", "url": "{{baseUrl}}/denuncias/{{id}}" }
+    },
+    {
+      "name": "4. Obtener denuncias de un ciudadano",
+      "request": { "method": "GET", "url": "{{baseUrl}}/denuncias/ciudadano/{{dni}}" }
+    },
+    {
+      "name": "5. Atender denuncia",
+      "request": { "method": "PUT", "url": "{{baseUrl}}/denuncias/{{id}}" }
+    }
+  ]
+}
