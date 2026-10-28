@@ -1,11 +1,11 @@
 {
   "info": {
     "name": "denunciaservice",
-    "description": "Los 5 endpoints de la API de denuncias. Cambia la variable baseUrl entre local y Render.",
+    "description": "Los 5 endpoints de la API de denuncias. baseUrl apunta a Render; para probar en local cámbiala a http://localhost:8080",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "baseUrl", "value": "https://denunciaservice-diaz.onrender.com" },
     { "key": "id", "value": "1" },
     { "key": "dni", "value": "71234561" }
   ],

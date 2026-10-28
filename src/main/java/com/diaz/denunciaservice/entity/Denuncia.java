@@ -1,6 +1,7 @@
 package com.diaz.denunciaservice.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -27,6 +28,7 @@ public class Denuncia {
     @Column(length = 255, nullable = false)
     private String descripcion;
 
+    @ColumnDefault("1")
     @Column(nullable = false)
     private Integer estado = 1;
 
